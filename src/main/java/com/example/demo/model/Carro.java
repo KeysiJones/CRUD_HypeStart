@@ -1,6 +1,7 @@
 package com.example.demo.model;
 
-//import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
 @Entity
 public class Carro {
@@ -9,9 +10,7 @@ public class Carro {
     private Long id;
     private String marca;
     private String modelo;
-    //@Enumerated (EnumType.STRING)
     private TipoCarro tipo;
-
 
     public Carro(Long id, String marca, String modelo, TipoCarro tipo) {
         this.id = id;
@@ -20,7 +19,7 @@ public class Carro {
         this.tipo = tipo;
     }
 
-    public Carro(){
+    public Carro() {
 
     }
 
