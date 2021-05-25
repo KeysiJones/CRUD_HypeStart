@@ -38,4 +38,16 @@ public class Carro {
     public TipoCarro getTipo() {
         return tipo;
     }
+
+    public void setMarca(String marca) {
+        this.marca = marca;
+    }
+
+    public void setModelo(String modelo) {
+        this.modelo = modelo;
+    }
+
+    public void setTipo(TipoCarro tipo) {
+        this.tipo = tipo;
+    }
 }
