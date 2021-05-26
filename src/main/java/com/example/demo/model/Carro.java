@@ -1,5 +1,7 @@
 package com.example.demo.model;
 
+import com.example.demo.enums.TipoCarro;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
