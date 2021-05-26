@@ -1,4 +1,4 @@
-package com.example.demo.enumCarro;
+package com.example.demo.enums;
 
 public enum TipoCarro {
     SEDAN, SPORT, CORRIDA
