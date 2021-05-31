@@ -1,14 +1,13 @@
 package com.example.demo.model;
 
 import com.example.demo.enums.TipoCarro;
-
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Carro {
 
     @Id
+    //@GeneratedValue(strategy = GenerationType.IDENTITY) (id autoincrement p/ Post)
     private Long id;
     private String marca;
     private String modelo;
