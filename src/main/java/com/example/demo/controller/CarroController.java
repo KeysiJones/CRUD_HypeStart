@@ -1,25 +1,28 @@
 package com.example.demo.controller;
 
-import com.example.demo.enums.TipoCarro;
 import com.example.demo.model.Carro;
 import com.example.demo.service.CarroService;
-import org.springframework.http.HttpStatus;
+import com.example.demo.util.MyCustomHttpResponse;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.util.List;
+import javax.validation.Valid;
+
+import org.slf4j.Logger;
 
 import static com.example.demo.util.Constants.PAGINA_INICIAL;
 
 @RestController
 @RequestMapping("/")
-public class CarroController{
+public class CarroController {
+    private static final Logger LOGGER = LoggerFactory.getLogger(CarroController.class);
+    private final CarroService service;
 
-    private final CarroService carroService;
-
-    public CarroController(CarroService carroService) {
-        this.carroService = carroService;
+    public CarroController(CarroService service) {
+        this.service = service;
     }
 
     @GetMapping
@@ -28,44 +31,34 @@ public class CarroController{
     }
 
     @GetMapping("/api/carros")
-    public Flux<List<Carro>> listaDeCarros() {
-        List<Carro> carros = List.of( //Arrays.asList com return Flux.fromIterable
-                new Carro(1L, "Mercedes","W12", TipoCarro.CORRIDA),
-                new Carro(2L, "Toyota", "Yaris", TipoCarro.SEDAN),
-                new Carro(3L, "Ford","EcoSport", TipoCarro.SPORT));
-        return Flux.just(carros);
-        //return clienteService.listAllCars();
-
+    public Flux<Carro> listaDeCarros() {
+        LOGGER.info("Iniciando consulta no banco de dados...");
+        return service.listAllCars()
+                .doOnNext(cars -> LOGGER.info("Retornando todos os carros cadastrados..."));
     }
 
-    @GetMapping("/api/carros/{id}")
-    public Mono<Carro> buscarCarroPorId(@PathVariable Long id) {
-        Carro carro = new Carro(1L, "Mercedes","W12", TipoCarro.CORRIDA);
-        return Mono.just(carro);
-        //return carroService.buscarCarroPorId();
+    @GetMapping("/api/carro/{id}")
+    public ResponseEntity<?> buscarCarroPorId(@PathVariable(name = "id") Long id) {
+        LOGGER.info("Verificando se o carro com o ID {} existe", id);
+        return service.findCarById(id);
     }
 
-    @ResponseStatus(value = HttpStatus.CREATED)
     @PostMapping("/api/cadastrar")
     public Mono<Carro> cadastrar(@RequestBody Carro carro) {
-        carro = new Carro(1L, "Mercedes","W12", TipoCarro.CORRIDA);
-        return Mono.just(carro);
-        //return  Mono.just(carroService.saveCar(carro));
+        LOGGER.info("Analisando dados enviados...");
+        return service.saveCar(carro)
+                .doOnNext(car -> LOGGER.info("Salvando um carro da {}", carro.getMarca()));
     }
 
-    @ResponseStatus(value = HttpStatus.NO_CONTENT)
     @PutMapping("/api/atualizar/{id}")
-    public Mono<Carro> atualizarCadastro(@PathVariable Long id, @RequestBody Carro carroASerAtualizado) {
-        carroASerAtualizado = new Carro(1L, "Mercedes", "AMG", TipoCarro.CORRIDA);
-        return Mono.just(carroASerAtualizado);
-        //carroASerAtualizado = carroService.atualizarCarroPorId(id);
-        //return Mono.just(carroService.updateCar(carroASerAtualizado));
+    public ResponseEntity<MyCustomHttpResponse> atualizarCadastro(@PathVariable Long id, @Valid @RequestBody Carro carro) {
+        LOGGER.info("Verificando se o carro com o ID {} existe", id);
+        return service.updateCar(id, carro);
     }
 
-//    @ResponseStatus(value = HttpStatus.NO_CONTENT)
-//    @DeleteMapping("/api/delete/{id}")
-//    public Mono<Carro> deletar(@PathVariable Long id) {
-//        Carro carro = carro.getId();
-//        return Mono.just(carroService.deleteCardById(id);
-//    }
+    @DeleteMapping("/api/delete/{id}")
+    public ResponseEntity<MyCustomHttpResponse> deletar(@PathVariable Long id) {
+        LOGGER.info("Verificando se o carro com o ID {} existe", id);
+        return service.deleteCarById(id);
+    }
 }

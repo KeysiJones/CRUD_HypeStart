@@ -1,20 +1,27 @@
 package com.example.demo.model;
 
 import com.example.demo.enums.TipoCarro;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 public class Carro {
 
     @Id
-    //@GeneratedValue(strategy = GenerationType.IDENTITY) (id autoincrement p/ Post)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NotBlank(message = "Informe a marca do carro !")
     private String marca;
+
+    @NotBlank(message = "Informe o modelo do carro !")
     private String modelo;
+
+    @Enumerated(EnumType.STRING)
     private TipoCarro tipo;
 
-    public Carro(Long id, String marca, String modelo, TipoCarro tipo) {
-        this.id = id;
+    public Carro(String marca, String modelo, TipoCarro tipo) {
         this.marca = marca;
         this.modelo = modelo;
         this.tipo = tipo;

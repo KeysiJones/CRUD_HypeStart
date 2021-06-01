@@ -1,20 +1,21 @@
 package com.example.demo.service;
 
 import com.example.demo.model.Carro;
-
+import com.example.demo.util.MyCustomHttpResponse;
+import org.springframework.http.ResponseEntity;
 import reactor.core.publisher.Mono;
 import reactor.core.publisher.Flux;
-
-import java.util.List;
 
 public interface CarroService {
 
     Mono<Carro> saveCar(Carro carro);
 
-    Flux<List<Carro>> listAllCars();
+    Flux<Carro> listAllCars();
 
-    Mono<Carro> updateCar(Long Id);
+    ResponseEntity<MyCustomHttpResponse> updateCar(Long Id, Carro carro);
 
-    Mono<Carro> deleteCarById(Long id);
+    ResponseEntity<MyCustomHttpResponse> deleteCarById(Long id);
+
+    ResponseEntity<?> findCarById(Long id);
 
 }
