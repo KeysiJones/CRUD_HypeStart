@@ -21,8 +21,7 @@ public class CarroServiceImpl implements CarroService {
 
     @Override
     public Mono<Carro> saveCar(Carro carro) {
-        Carro savedCar = repository.save(carro);
-        return Mono.just(savedCar);
+        return Mono.just(repository.save(carro));
     }
 
     @Override

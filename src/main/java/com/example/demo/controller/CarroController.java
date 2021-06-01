@@ -8,9 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-
 import javax.validation.Valid;
-
 import org.slf4j.Logger;
 
 import static com.example.demo.util.Constants.PAGINA_INICIAL;
