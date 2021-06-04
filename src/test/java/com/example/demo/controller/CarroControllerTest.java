@@ -8,7 +8,11 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
@@ -35,6 +39,20 @@ public class CarroControllerTest {
                 () -> assertEquals(expectedResponse.blockFirst().getMarca(), response.blockFirst().getMarca()),
                 () -> assertEquals(expectedResponse.blockFirst().getModelo(), response.blockFirst().getModelo()),
                 () -> assertEquals(expectedResponse.blockFirst().getTipo(), response.blockFirst().getTipo())
+        );
+    }
+
+    @Test
+    public void buscaCarroPorId() {
+        Carro carroStub = new Carro("FERRARI", "SPIDER", TipoCarro.SPORT);
+        ResponseEntity expectedResponse = new ResponseEntity<>(carroStub, HttpStatus.OK);
+        when(service.findCarById(Long.valueOf("1"))).thenReturn(expectedResponse);
+        ResponseEntity response = controller.buscarCarroPorId(Long.valueOf("1"));
+        assertAll(
+                () -> assertNotNull(response),
+                () -> assertTrue(response.hasBody()),
+                () -> assertEquals(expectedResponse.getBody(), response.getBody()),
+                () -> assertEquals(expectedResponse.getStatusCode(), response.getStatusCode())
         );
     }
 
