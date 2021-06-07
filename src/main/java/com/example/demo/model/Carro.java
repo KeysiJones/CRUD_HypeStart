@@ -28,7 +28,6 @@ public class Carro {
     }
 
     public Carro() {
-
     }
 
     public Long getId() {

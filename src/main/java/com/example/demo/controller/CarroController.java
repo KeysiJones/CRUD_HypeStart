@@ -1,5 +1,5 @@
 package com.example.demo.controller;
-
+import com.example.demo.enums.TipoCarro;
 import com.example.demo.model.Carro;
 import com.example.demo.service.CarroService;
 import com.example.demo.util.MyCustomHttpResponse;
@@ -10,7 +10,6 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import javax.validation.Valid;
 import org.slf4j.Logger;
-
 import static com.example.demo.util.Constants.PAGINA_INICIAL;
 
 @RestController
@@ -39,6 +38,12 @@ public class CarroController {
     public ResponseEntity<?> buscarCarroPorId(@PathVariable(name = "id") Long id) {
         LOGGER.info("Verificando se o carro com o ID {} existe", id);
         return service.findCarById(id);
+    }
+
+    @GetMapping("/api/carros/search")
+    public ResponseEntity<?> buscarCarroPorTipo(@RequestParam TipoCarro tipoCarro) {
+        LOGGER.info("Retornando todos os carros cadastrados do tipo {}", tipoCarro);
+        return service.findAllCarsByTipo(tipoCarro);
     }
 
     @PostMapping("/api/cadastrar")
