@@ -1,10 +1,14 @@
 package com.example.demo.service;
 
+import com.example.demo.enums.TipoCarro;
 import com.example.demo.model.Carro;
 import com.example.demo.util.MyCustomHttpResponse;
 import org.springframework.http.ResponseEntity;
 import reactor.core.publisher.Mono;
 import reactor.core.publisher.Flux;
+
+import java.util.List;
+import java.util.Optional;
 
 public interface CarroService {
 
@@ -18,4 +22,6 @@ public interface CarroService {
 
     ResponseEntity<?> findCarById(Long id);
 
+    ResponseEntity<?> findAllCarsByTipo(TipoCarro tipoCarro);
 }
+

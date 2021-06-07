@@ -55,5 +55,4 @@ public class CarroControllerTest {
                 () -> assertEquals(expectedResponse.getStatusCode(), response.getStatusCode())
         );
     }
-
 }
