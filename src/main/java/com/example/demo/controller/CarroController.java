@@ -43,15 +43,21 @@ public class CarroController {
 
     @GetMapping("/api/carros/search")
     public ResponseEntity<?> buscarCarroPorTipo(@RequestParam TipoCarro tipoCarro) {
-        LOGGER.info("Retornando todos os carros cadastrados do tipo {}", tipoCarro);
+        LOGGER.info("Retornando todos os carros cadastrados do tipo {} ", tipoCarro);
         return service.findAllCarsByTipo(tipoCarro);
+    }
+
+    @GetMapping("/api/carros/search_by_marca")
+    public ResponseEntity<?> buscarCarroPorMarca(@RequestParam String marca) {
+        LOGGER.info("Retornando todos os carros cadastrados da marca {} ", marca);
+        return service.findAllCarsByMarca(marca);
     }
 
     @PostMapping("/api/cadastrar")
     public Mono<Carro> cadastrar(@RequestBody Carro carro) {
         LOGGER.info("Analisando dados enviados...");
         return service.saveCar(carro)
-                .doOnNext(car -> LOGGER.info("Salvando um carro da {}", carro.getMarca()));
+                .doOnNext(car -> LOGGER.info("Salvando um carro da {} ", carro.getMarca()));
     }
 
     @PutMapping("/api/atualizar/{id}")

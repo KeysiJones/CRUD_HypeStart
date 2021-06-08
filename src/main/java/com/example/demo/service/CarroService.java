@@ -7,9 +7,6 @@ import org.springframework.http.ResponseEntity;
 import reactor.core.publisher.Mono;
 import reactor.core.publisher.Flux;
 
-import java.util.List;
-import java.util.Optional;
-
 public interface CarroService {
 
     Mono<Carro> saveCar(Carro carro);
@@ -23,5 +20,7 @@ public interface CarroService {
     ResponseEntity<?> findCarById(Long id);
 
     ResponseEntity<?> findAllCarsByTipo(TipoCarro tipoCarro);
+
+    ResponseEntity<?> findAllCarsByMarca(String marca);
 }
 
