@@ -1,4 +1,5 @@
 package com.example.demo.service.impl;
+
 import com.example.demo.enums.TipoCarro;
 import com.example.demo.model.Carro;
 import com.example.demo.repository.CarroRepository;
@@ -64,6 +65,16 @@ public class CarroServiceImpl implements CarroService {
         if (!carros.get().isEmpty()) {
             return new ResponseEntity<>(carros.get(), HttpStatus.OK);
         }
-        return new ResponseEntity<>(new MyCustomHttpResponse(HttpStatus.NOT_FOUND.value(), "Nenhum carro com o Tipo" + tipoCarro + "foi encontrado"), HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(new MyCustomHttpResponse(HttpStatus.NOT_FOUND.value(), "Nenhum carro com o Tipo " + tipoCarro + " foi encontrado"), HttpStatus.NOT_FOUND);
     }
+
+    @Override
+    public ResponseEntity<?> findAllCarsByMarca(String marca) {
+        Optional<List<Carro>> carros = repository.findAllCarsByMarcaIgnoreCase(marca);
+        if (!carros.get().isEmpty()) {
+            return new ResponseEntity<>(carros.get(), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(new MyCustomHttpResponse(HttpStatus.NOT_FOUND.value(), "Nenhum carro da fabricante " + marca + " foi encontrado"), HttpStatus.NOT_FOUND);
+    }
+
 }

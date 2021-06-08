@@ -32,7 +32,6 @@ public class CarroControllerTest {
         Flux<Carro> expectedResponse = Flux.just(carroStub, carroStub);
         when(service.listAllCars()).thenReturn(expectedResponse);
         Flux<Carro> response = controller.listaDeCarros();
-
         assertAll(
                 () -> assertNotNull(response),
                 () -> assertEquals(expectedResponse.blockFirst().getId(), response.blockFirst().getId()),
@@ -69,7 +68,7 @@ public class CarroControllerTest {
                 () -> assertTrue(response.hasBody()),
                 () -> assertEquals(expectedResponse.getBody(), response.getBody()),
                 () -> assertEquals(expectedResponse.getStatusCode(), response.getStatusCode())
-                );
+        );
     }
 
     @Test
