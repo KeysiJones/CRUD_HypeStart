@@ -53,6 +53,12 @@ public class CarroController {
         return service.findAllCarsByMarca(marca);
     }
 
+    @GetMapping("/api/carros/search_by_modelo")
+    public ResponseEntity<?> buscarCarroPorModelo(@RequestParam String modelo) {
+        LOGGER.info("Retornando todos os carros cadastrados do modelo {} ", modelo);
+        return service.findAllCarsByModelo(modelo);
+    }
+
     @PostMapping("/api/cadastrar")
     public Mono<Carro> cadastrar(@RequestBody Carro carro) {
         LOGGER.info("Analisando dados enviados...");
