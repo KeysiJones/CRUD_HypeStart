@@ -56,7 +56,7 @@ public class CarroServiceImpl implements CarroService {
         if (carro.isPresent()) {
             return new ResponseEntity<>(carro.get(), HttpStatus.OK);
         }
-        return new ResponseEntity<>(new MyCustomHttpResponse(HttpStatus.NOT_FOUND.value(), "Nenhum carro com o ID " + id + " foi encontrado"), HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(new MyCustomHttpResponse(HttpStatus.NOT_FOUND.value(), "Nenhum carro com o ID " + id + " foi encontrado."), HttpStatus.NOT_FOUND);
     }
 
     @Override
@@ -65,7 +65,7 @@ public class CarroServiceImpl implements CarroService {
         if (!carros.get().isEmpty()) {
             return new ResponseEntity<>(carros.get(), HttpStatus.OK);
         }
-        return new ResponseEntity<>(new MyCustomHttpResponse(HttpStatus.NOT_FOUND.value(), "Nenhum carro com o Tipo " + tipoCarro + " foi encontrado"), HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(new MyCustomHttpResponse(HttpStatus.NOT_FOUND.value(), "Nenhum carro com o tipo " + tipoCarro + " foi encontrado."), HttpStatus.NOT_FOUND);
     }
 
     @Override
@@ -74,7 +74,16 @@ public class CarroServiceImpl implements CarroService {
         if (!carros.get().isEmpty()) {
             return new ResponseEntity<>(carros.get(), HttpStatus.OK);
         }
-        return new ResponseEntity<>(new MyCustomHttpResponse(HttpStatus.NOT_FOUND.value(), "Nenhum carro da fabricante " + marca + " foi encontrado"), HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(new MyCustomHttpResponse(HttpStatus.NOT_FOUND.value(), "Nenhum carro do fabricante " + marca + " foi encontrado."), HttpStatus.NOT_FOUND);
+    }
+
+    @Override
+    public ResponseEntity<?> findAllCarsByModelo(String modelo) {
+        Optional<List<Carro>> carros = repository.findAllCarsByModeloIgnoreCase(modelo);
+        if (!carros.get().isEmpty()) {
+            return new ResponseEntity<>(carros.get(), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(new MyCustomHttpResponse(HttpStatus.NOT_FOUND.value(), "Nenhum carro do modelo " + modelo + " foi encontrado."), HttpStatus.NOT_FOUND);
     }
 
 }
