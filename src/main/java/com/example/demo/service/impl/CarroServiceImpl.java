@@ -70,7 +70,7 @@ public class CarroServiceImpl implements CarroService {
 
     @Override
     public ResponseEntity<?> findAllCarsByMarca(String marca) {
-        Optional<List<Carro>> carros = repository.findAllCarsByMarcaIgnoreCase(marca);
+        Optional<List<Carro>> carros = repository.findAllCarsByMarcaIgnoreCaseContaining(marca);
         if (!carros.get().isEmpty()) {
             return new ResponseEntity<>(carros.get(), HttpStatus.OK);
         }
@@ -79,7 +79,7 @@ public class CarroServiceImpl implements CarroService {
 
     @Override
     public ResponseEntity<?> findAllCarsByModelo(String modelo) {
-        Optional<List<Carro>> carros = repository.findAllCarsByModeloIgnoreCase(modelo);
+        Optional<List<Carro>> carros = repository.findAllCarsByModeloIgnoreCaseContaining(modelo);
         if (!carros.get().isEmpty()) {
             return new ResponseEntity<>(carros.get(), HttpStatus.OK);
         }
