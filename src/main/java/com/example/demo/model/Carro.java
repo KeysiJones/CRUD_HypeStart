@@ -30,6 +30,11 @@ public class Carro {
     public Carro() {
     }
 
+    public Carro(String marca, String modelo) {
+        this.marca = marca;
+        this.modelo = modelo;
+    }
+
     public Long getId() {
         return id;
     }
