@@ -4,6 +4,7 @@ import com.example.demo.enums.TipoCarro;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class Carro {
@@ -12,19 +13,27 @@ public class Carro {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "Informe a marca do carro !")
+    @NotBlank(message = "Informe a marca do carro!")
     private String marca;
 
-    @NotBlank(message = "Informe o modelo do carro !")
+    @NotBlank(message = "Informe o modelo do carro!")
     private String modelo;
 
     @Enumerated(EnumType.STRING)
     private TipoCarro tipo;
 
-    public Carro(String marca, String modelo, TipoCarro tipo) {
+    @NotNull(message = "Informe o valor do carro!")
+    private double preco;
+
+    @NotNull(message = "Informe a quantidade em estoque!")
+    private Integer quantidade;
+
+    public Carro(String marca, String modelo, TipoCarro tipo, double preco, Integer quantidade) {
         this.marca = marca;
         this.modelo = modelo;
         this.tipo = tipo;
+        this.preco = preco;
+        this.quantidade = quantidade;
     }
 
     public Carro() {
@@ -51,6 +60,10 @@ public class Carro {
         return tipo;
     }
 
+    public double getPreco() { return preco; }
+
+    public Integer getQuantidade() { return quantidade; }
+
     public void setMarca(String marca) {
         this.marca = marca;
     }
@@ -62,4 +75,8 @@ public class Carro {
     public void setTipo(TipoCarro tipo) {
         this.tipo = tipo;
     }
+
+    public void setPreco(double preco) { this.preco = preco; }
+
+    public void setQuantidade(Integer quantidade) { this.quantidade = quantidade; }
 }

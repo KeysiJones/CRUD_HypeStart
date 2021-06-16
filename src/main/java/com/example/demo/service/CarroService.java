@@ -24,5 +24,9 @@ public interface CarroService {
     ResponseEntity<?> findAllCarsByMarca(String marca);
 
     ResponseEntity<?> findAllCarsByModelo(String modelo);
+
+    ResponseEntity<?> findAllCarsByPreco(Double preco);
+
+    ResponseEntity<?> findAllCarsByQuantidade(Integer quantidade);
 }
 

@@ -161,7 +161,7 @@ public class CarroControllerTest {
 
     @Test
     public void atualizarCarroShouldReturnSuccessfulResponse() {
-        Carro updateCar = new Carro("Fiat", "Mobi", TipoCarro.HATCH);
+        Carro updateCar = new Carro("Fiat", "Mobi", TipoCarro.HATCH, 49990.90, 10);
         ResponseEntity expectedResponse = new ResponseEntity(HttpStatus.OK);
         when(service.updateCar(1L, updateCar)).thenReturn(expectedResponse);
         ResponseEntity response = controller.atualizarCadastro(1L, updateCar);

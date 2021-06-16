@@ -55,8 +55,20 @@ public class CarroController {
 
     @GetMapping("/api/carros/search_by_modelo")
     public ResponseEntity<?> buscarCarroPorModelo(@RequestParam String modelo) {
-        LOGGER.info("Retornando todos os carros cadastrados do modelo {} ", modelo);
+        LOGGER.info("Retornando todos os carros cadastrados do modelo {} .", modelo);
         return service.findAllCarsByModelo(modelo);
+    }
+
+    @GetMapping("/api/carros/search_by_preco")
+    public ResponseEntity<?> buscarCarroPorPreco(@RequestParam Double preco) {
+        LOGGER.info("Retornando todos os carros cadastrados com o valor de {} Reais.", preco);
+        return service.findAllCarsByPreco(preco);
+    }
+
+    @GetMapping("/api/carros/search_by_qtd")
+    public ResponseEntity<?> buscarCarroPorQuantidade(@RequestParam Integer quantidade) {
+        LOGGER.info("Retornando todos os carros com {} itens em estoque.", quantidade);
+        return service.findAllCarsByQuantidade(quantidade);
     }
 
     @PostMapping("/api/cadastrar")
