@@ -1,7 +1,6 @@
 package com.example.demo.model;
 
 import com.example.demo.enums.FormaPagamento;
-import reactor.core.publisher.Flux;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -15,6 +14,7 @@ public class Pedido {
     private Long id;
 
     @NotNull(message = "Informe os itens do pedido.")
+    @OneToMany
     private List<Carro> listaCarros;
 
     @NotNull(message = "Informe o valor total do pedido.")
