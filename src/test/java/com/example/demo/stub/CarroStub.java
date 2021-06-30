@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 public class CarroStub {
 
     public static Carro create(TipoCarro tipoCarro){
-        return new Carro ("FERRARI", "SPIDER", tipoCarro, 600000.00, 1);
+        return new Carro ("FERRARI", "SPIDER", tipoCarro, 2021, 2022, 600000.00, 1);
     }
 
     public static Carro carroBasico(){

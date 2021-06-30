@@ -1,6 +1,8 @@
 package com.example.demo.model;
 
+import org.hibernate.validator.constraints.br.CPF;
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
 @Entity
@@ -17,12 +19,14 @@ public class Vendedor {
     private String matricula;
 
     @NotBlank(message = "Favor informar um CPF válido!")
+    @CPF
     private String cpf;
 
     @NotBlank(message = "Favor informar um e-mail válido!")
+    @Email
     private String email;
 
-    public Vendedor(Long id, String nome, String matricula, String cpf, String email){
+    public Vendedor(String nome, String matricula, String cpf, String email){
         this.id = id;
         this.nome = nome;
         this.matricula = matricula;
