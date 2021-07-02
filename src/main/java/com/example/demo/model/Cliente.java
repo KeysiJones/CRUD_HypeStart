@@ -16,13 +16,15 @@ public class Cliente {
     @NotBlank(message = "Informe o nome do cliente!")
     private String nome;
 
-    @NotBlank(message = "O campo cpf é obrigatorio")
+    @NotBlank(message = "Favor informar um CPF válido!")
     @CPF
     private String cpf;
 
+    @NotBlank(message = "Favor informar um e-mail válido!")
     @Email
     private String email;
 
+    @NotBlank(message = "Favor informar um telefone válido!")
     private String telefone;
 
     @OneToMany
