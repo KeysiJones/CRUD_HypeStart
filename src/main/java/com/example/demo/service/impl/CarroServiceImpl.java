@@ -1,10 +1,15 @@
 package com.example.demo.service.impl;
 
+import com.example.demo.client.CarBrandResponse;
+import com.example.demo.client.TabelaFipeClient;
+import com.example.demo.controller.CarroController;
 import com.example.demo.enums.TipoCarro;
 import com.example.demo.model.Carro;
 import com.example.demo.repository.CarroRepository;
 import com.example.demo.service.CarroService;
 import com.example.demo.util.MyCustomHttpResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,8 +20,15 @@ import java.util.*;
 @Service
 public class CarroServiceImpl implements CarroService {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(CarroController.class);
+
+
     @Autowired
     CarroRepository repository;
+
+    @Autowired
+    TabelaFipeClient tabelaFipeClient;
+
 
     @Override
     public Mono<Carro> saveCar(Carro carro) {
@@ -124,5 +136,16 @@ public class CarroServiceImpl implements CarroService {
         }
         return new ResponseEntity<>(new MyCustomHttpResponse(HttpStatus.NOT_FOUND.value(), "Nenhum carro foi encontrado com essa quantidade em estoque."), HttpStatus.NOT_FOUND);
     }
+
+    @Override
+    public Flux<CarBrandResponse> retrieveAllCarBrands() {
+        return tabelaFipeClient.retrieveAllCarBrands();
+    }
+
+    @Override
+    public Mono<String> retrieveCarWithPrice(String brandCode, String modelCode, String yearId) {
+        LOGGER.info("Return a car with price with parameters brand {}, model {}, year {}", brandCode,modelCode, yearId);
+        return tabelaFipeClient.retrieveCarWithPrice(brandCode,modelCode, yearId);
+    } // todo fazer o De-Para
 
 }

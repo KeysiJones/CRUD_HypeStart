@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.client.CarBrandResponse;
 import com.example.demo.enums.TipoCarro;
 import com.example.demo.model.Carro;
 import com.example.demo.service.CarroService;
@@ -12,6 +13,7 @@ import reactor.core.publisher.*;
 import javax.validation.Valid;
 import org.slf4j.Logger;
 
+
 @RestController
 @RequestMapping("/")
 public class CarroController {
@@ -22,6 +24,23 @@ public class CarroController {
         this.service = service;
     }
 
+
+
+    @ApiOperation("List all Brands from Tabela Fipe")
+    @GetMapping("/api/carros/brand")
+    public Flux<CarBrandResponse> retrieveAllCarBrands(){
+        LOGGER.info("Return brands from Tabela Fipe");
+        return service.retrieveAllCarBrands();
+    }
+
+    @ApiOperation("RReturn the price from Tabela Fipe")
+    @GetMapping("/api/carros/price/{brandCode}/{modelCode}/{yearId}")
+    public Mono<String> retrieveCarWithPrice(@PathVariable String brandCode,
+                                             @PathVariable String modelCode,
+                                             @PathVariable String yearId){
+        LOGGER.info("return a car with price from Tabela Fipe");
+        return service.retrieveCarWithPrice(brandCode,modelCode, yearId);
+    }
 
     @ApiOperation("List all available cars in database")
     @GetMapping("/api/list/cars")
