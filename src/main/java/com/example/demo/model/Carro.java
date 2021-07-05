@@ -1,40 +1,52 @@
 package com.example.demo.model;
 
 import com.example.demo.enums.TipoCarro;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
+@ApiModel("Create car")
 public class Carro {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @ApiModelProperty(value = "Id number")
     private Long id;
 
     @NotBlank(message = "Informe a marca do carro!")
+    @ApiModelProperty(value = "Car brand")
     private String marca;
 
     @NotBlank(message = "Informe o modelo do carro!")
+    @ApiModelProperty(value = "Car model")
     private String modelo;
 
     @NotNull(message = "Informe o tipo do carro!")
     @Enumerated(EnumType.STRING)
+    @ApiModelProperty(value = "Car type")
     private TipoCarro tipo;
 
     @NotNull(message = "Informe o ano de fabricação!")
     @Size(min=4, max=4)
+    @ApiModelProperty(value = "Car manufacture year")
     private Integer anoFabricacao;
 
     @NotNull(message = "Informe o ano do modelo!")
     @Size(min=4, max=4)
+    @ApiModelProperty(value = "Car model year")
     private Integer anoModelo;
 
     @NotNull(message = "Informe o valor do carro!")
+    @ApiModelProperty(value = "Car price")
     private double preco;
 
     @NotNull(message = "Informe a quantidade em estoque!")
+    @ApiModelProperty(value = "Car quantity")
     private Integer quantidade;
 
     public Carro(String marca, String modelo, TipoCarro tipo, Integer anoFabricacao, Integer anoModelo, double preco, Integer quantidade) {

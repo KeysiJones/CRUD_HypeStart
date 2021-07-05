@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.client.CarBrandResponse;
 import com.example.demo.enums.TipoCarro;
 import com.example.demo.model.Carro;
 import com.example.demo.util.MyCustomHttpResponse;
@@ -32,5 +33,10 @@ public interface CarroService {
     ResponseEntity<?> findAllCarsByPreco(Double preco);
 
     ResponseEntity<?> findAllCarsByQuantidade(Integer quantidade);
+
+    Flux<CarBrandResponse> retrieveAllCarBrands();
+
+    Mono<String> retrieveCarWithPrice(String brandCode, String modelCode, String yearId);
+
 }
 
