@@ -3,7 +3,7 @@ package com.example.demo.client;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModelProperty;
 
-public class CarTabelaFipeResponse {
+public class CarFipeTableResponse {
 
     @JsonProperty("Valor")
     @ApiModelProperty("Car price")
@@ -41,10 +41,10 @@ public class CarTabelaFipeResponse {
     @ApiModelProperty("Acronym Fuel")
     private String acronymFuel;
 
-    public CarTabelaFipeResponse() {
+    public CarFipeTableResponse() {
     }
 
-    public CarTabelaFipeResponse(String price, String brand, String model, Integer modelYear, String fuel, String fipeCode, String referenceMonth, Integer vehicleType, String acronymFuel) {
+    public CarFipeTableResponse(String price, String brand, String model, Integer modelYear, String fuel, String fipeCode, String referenceMonth, Integer vehicleType, String acronymFuel) {
         this.price = price;
         this.brand = brand;
         this.model = model;
@@ -94,7 +94,7 @@ public class CarTabelaFipeResponse {
 
     @Override
     public String toString() {
-        return "CarTabelaFipeResponse{" +
+        return "CarFipeTableResponse{" +
                 "price='" + price + '\'' +
                 ", brand='" + brand + '\'' +
                 ", model='" + model + '\'' +

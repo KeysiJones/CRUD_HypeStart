@@ -2,12 +2,12 @@ package com.example.demo.controller;
 
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
-import static com.example.demo.util.Constants.PAGINA_INICIAL;
+import static com.example.demo.util.Constants.HOME_PAGE;
 
 @RestController
 @RequestMapping("/")
 public class HomeController {
 
     @GetMapping
-    public Mono<String> homePage() { return Mono.just(PAGINA_INICIAL); }
+    public Mono<String> homePage() { return Mono.just(HOME_PAGE); }
 }

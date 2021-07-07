@@ -1,25 +1,39 @@
---DROP TABLE IF EXISTS carro;
-CREATE TABLE IF NOT EXISTS carro (
+--DROP TABLE IF EXISTS car;
+--DROP TABLE IF EXISTS vendor;
+--DROP TABLE IF EXISTS customer;
+--DROP TABLE IF EXISTS invoice;
+
+CREATE TABLE IF NOT EXISTS car (
     id serial PRIMARY KEY,
-    marca VARCHAR(255),
-    modelo VARCHAR(255),
-    tipo VARCHAR(255),
-    preco REAL,
-    quantidade INTEGER
+    brand VARCHAR(255),
+    model VARCHAR(255),
+    type VARCHAR(255),
+    yearManuf INTEGER,
+    yearModel INTEGER,
+    price REAL,
+    quantity INTEGER
 );
 
-CREATE TABLE IF NOT EXISTS pedido (
+CREATE TABLE IF NOT EXISTS invoice (
     id serial PRIMARY KEY,
-    listaCarros VARCHAR(255),
-    valorTotal REAL,
-    formaPagamento VARCHAR(255)
+    listCars VARCHAR(255),
+    totalPrice REAL,
+    paymentMethod VARCHAR(255)
 );
 
-CREATE TABLE IF NOT EXISTS cliente (
+CREATE TABLE IF NOT EXISTS customer (
     id serial PRIMARY KEY,
-    nome VARCHAR(255),
-    cpf VARCHAR(255),
+    name VARCHAR(255),
+    cpf VARCHAR(9),
     email VARCHAR(255),
-    telefone VARCHAR(255),
-    carrosCliente VARCHAR(255)
+    phone VARCHAR(255),
+    carsCustomer VARCHAR(255)
+);
+
+CREATE TABLE IF NOT EXISTS vendor (
+    id serial PRIMARY KEY,
+    name VARCHAR(255),
+    registration VARCHAR(6),
+    cpf VARCHAR(9),
+    email VARCHAR(255)
 );
