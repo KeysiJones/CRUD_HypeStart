@@ -38,7 +38,7 @@ public interface CarroService {
 
     Flux<CarBrandResponse> retrieveAllCarBrands();
 
-    Mono<String> retrieveCarWithPrice(String brandCode, String modelCode, String yearId);
+    Mono<String> retrievePrice(String brandCode, String modelCode, String yearId);
 
 }
 

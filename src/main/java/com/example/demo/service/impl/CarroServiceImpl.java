@@ -140,7 +140,7 @@ public class CarroServiceImpl implements CarroService {
     }
 
     @Override
-    public Mono<String> retrieveCarWithPrice(String brandCode, String modelCode, String yearId) {
+    public Mono<String> retrievePrice(String brandCode, String modelCode, String yearId) {
         LOGGER.info("Return a car with price with parameters brand {}, model {}, year {}", brandCode, modelCode, yearId);
         return tabelaFipeClient.retrievePrice(brandCode, modelCode, yearId);
     }

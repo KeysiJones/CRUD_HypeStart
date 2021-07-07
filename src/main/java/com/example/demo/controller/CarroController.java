@@ -43,7 +43,7 @@ public class CarroController {
             @ApiResponse(code = 200, message = "Request a price from Tabela Fipe")
     })
     @GetMapping("/api/carros/price/{brandCode}/{modelCode}/{yearId}")
-    public Mono<String> retrieveCarWithPrice(
+    public Mono<String> retrievePrice(
             @ApiParam(name = "brandCode", value = "Brand identifier")
             @PathVariable String brandCode,
             @ApiParam(name = "modelCode", value = "Model identifier")
@@ -51,24 +51,7 @@ public class CarroController {
             @ApiParam(name = "yearId", value = "YearId")
             @PathVariable String yearId) {
         LOGGER.info("return a car with price from Tabela Fipe");
-        return service.retrieveCarWithPrice(brandCode, modelCode, yearId);
-    }
-
-
-    @ApiOperation("List all Brands from Tabela Fipe")
-    @GetMapping("/api/carros/brand")
-    public Flux<CarBrandResponse> retrieveAllCarBrands(){
-        LOGGER.info("Return brands from Tabela Fipe");
-        return service.retrieveAllCarBrands();
-    }
-
-    @ApiOperation("RReturn the price from Tabela Fipe")
-    @GetMapping("/api/carros/price/{brandCode}/{modelCode}/{yearId}")
-    public Mono<String> retrieveCarWithPrice(@PathVariable String brandCode,
-                                             @PathVariable String modelCode,
-                                             @PathVariable String yearId){
-        LOGGER.info("return a car with price from Tabela Fipe");
-        return service.retrieveCarWithPrice(brandCode,modelCode, yearId);
+        return service.retrievePrice(brandCode, modelCode, yearId);
     }
 
     @ApiOperation("List all available cars in database")
