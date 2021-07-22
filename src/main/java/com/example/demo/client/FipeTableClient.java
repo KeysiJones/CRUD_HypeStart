@@ -1,6 +1,6 @@
 package com.example.demo.client;
 
-import com.example.demo.controller.CarroController;
+import com.example.demo.controller.CarController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -8,11 +8,10 @@ import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-
 @Component
-public class TabelaFipeClient {
+public class FipeTableClient {
 
-        private static final Logger LOGGER = LoggerFactory.getLogger(CarroController.class);
+        private static final Logger LOGGER = LoggerFactory.getLogger(CarController.class);
 
         private final String baseUrl = "parallelum.com.br/fipe/api";
         WebClient webClient = WebClient.create(baseUrl);
@@ -30,7 +29,7 @@ public class TabelaFipeClient {
                 return webClient.get()
                         .uri("/v1/carros/marcas/{brandCode}/modelos/{modelCode}/anos/{yearId}", brandCode, modelCode, yearId)
                         .retrieve()
-                        .bodyToMono(CarTabelaFipeResponse.class)
-                        .map(CarTabelaFipeResponse::getPrice);
+                        .bodyToMono(CarFipeTableResponse.class)
+                        .map(CarFipeTableResponse::getPrice);
         }
 }

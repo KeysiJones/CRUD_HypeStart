@@ -1,8 +1,8 @@
 package com.example.demo.controller;
 
-import com.example.demo.model.Vendedor;
-import com.example.demo.service.VendedorService;
-import com.example.demo.stub.VendedorStub;
+import com.example.demo.model.Vendor;
+import com.example.demo.service.VendorService;
+import com.example.demo.stub.VendorStub;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -16,25 +16,31 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class VendedorControllerTest {
+public class VendorControllerTest {
+
+    private Long id = 1L;
+    private String name = "Joao da Silva";
+    private String cpf = "22483611060";
+    private String registration = "99999";
+    private String email = "vendor@hypeflame.com.br";
 
     @Mock
-    VendedorService service;
+    VendorService service;
 
     @InjectMocks
-    private VendedorController controller;
+    private VendorController controller;
 
     @Test
-    public void listAllVendorsShouldReturnSuccessFullResponse() {
-        Vendedor vendedorStub = VendedorStub.create();
-        Flux<Vendedor> expectedResponse = Flux.just(vendedorStub, vendedorStub);
+    public void listAllVendorsShouldReturnSuccessfulResponse() {
+        Vendor vendorStub = VendorStub.create();
+        Flux<Vendor> expectedResponse = Flux.just(vendorStub, vendorStub);
         when(service.listAllVendors()).thenReturn(expectedResponse);
-        Flux<Vendedor> response = controller.listaDeVendedores();
+        Flux<Vendor> response = controller.listOfVendors();
         assertAll(
                 () -> assertNotNull(response),
                 () -> assertEquals(expectedResponse.blockFirst().getId(), response.blockFirst().getId()),
-                () -> assertEquals(expectedResponse.blockFirst().getNome(), response.blockFirst().getNome()),
-                () -> assertEquals(expectedResponse.blockFirst().getMatricula(), response.blockFirst().getMatricula()),
+                () -> assertEquals(expectedResponse.blockFirst().getName(), response.blockFirst().getName()),
+                () -> assertEquals(expectedResponse.blockFirst().getRegistration(), response.blockFirst().getRegistration()),
                 () -> assertEquals(expectedResponse.blockFirst().getCpf(), response.blockFirst().getCpf()),
                 () -> assertEquals(expectedResponse.blockFirst().getEmail(), response.blockFirst().getEmail())
         );
@@ -42,10 +48,10 @@ public class VendedorControllerTest {
 
     @Test
     public void findVendorById() {
-        Vendedor vendedorStub = VendedorStub.create();
-        ResponseEntity expectedResponse = new ResponseEntity<>(vendedorStub, HttpStatus.OK);
-        when(service.findVendorById(Long.valueOf("1"))).thenReturn(expectedResponse);
-        ResponseEntity response = controller.buscarVendedorPorId(Long.valueOf("1"));
+        Vendor vendorStub = VendorStub.create();
+        ResponseEntity expectedResponse = new ResponseEntity<>(vendorStub, HttpStatus.OK);
+        when(service.findVendorById(id)).thenReturn(expectedResponse);
+        ResponseEntity response = controller.searchVendorById(id);
         assertAll(
                 () -> assertNotNull(response),
                 () -> assertTrue(response.hasBody()),
@@ -56,13 +62,12 @@ public class VendedorControllerTest {
 
     @Test
     public void findVendorByNameShouldReturnFullResponse() {
-        String nome = "João da Silva";
-        Vendedor vendedor = VendedorStub.create();
-        List<Vendedor> vendedorStub = new ArrayList<>();
-        vendedorStub.add(vendedor);
-        ResponseEntity expectedResponse = new ResponseEntity<>(vendedorStub, HttpStatus.OK);
-        when(service.findAllVendorsByNome(nome)).thenReturn(expectedResponse);
-        ResponseEntity response = controller.buscarVendedorPorNome(nome);
+        Vendor vendor = VendorStub.create();
+        List<Vendor> vendorStub = new ArrayList<>();
+        vendorStub.add(vendor);
+        ResponseEntity expectedResponse = new ResponseEntity<>(vendorStub, HttpStatus.OK);
+        when(service.findAllVendorsByName(name)).thenReturn(expectedResponse);
+        ResponseEntity response = controller.searchVendorByName(name);
         assertAll(
                 () -> assertNotNull(response),
                 () -> assertTrue(response.hasBody()),
@@ -73,10 +78,9 @@ public class VendedorControllerTest {
 
     @Test
     public void findVendorByNameShouldReturnNotFound() {
-        String nome = "João da Silva";
-        ResponseEntity expectedResponse = VendedorStub.vendedorNotFound();
-        when(service.findAllVendorsByNome(nome)).thenReturn(expectedResponse);
-        ResponseEntity response = controller.buscarVendedorPorNome(nome);
+        ResponseEntity expectedResponse = VendorStub.vendorNotFound();
+        when(service.findAllVendorsByName(name)).thenReturn(expectedResponse);
+        ResponseEntity response = controller.searchVendorByName(name);
         assertAll(
                 () -> assertNotNull(response),
                 () -> assertTrue(response.hasBody()),
@@ -87,13 +91,12 @@ public class VendedorControllerTest {
 
     @Test
     public void findVendorByCpfShouldReturnFullResponse() {
-        String cpf = "22483611060";
-        Vendedor vendedor = VendedorStub.create();
-        List<Vendedor> vendedorStub = new ArrayList<>();
-        vendedorStub.add(vendedor);
-        ResponseEntity expectedResponse = new ResponseEntity<>(vendedorStub, HttpStatus.OK);
+        Vendor vendor = VendorStub.create();
+        List<Vendor> vendorStub = new ArrayList<>();
+        vendorStub.add(vendor);
+        ResponseEntity expectedResponse = new ResponseEntity<>(vendorStub, HttpStatus.OK);
         when(service.findAllVendorsByCpf(cpf)).thenReturn(expectedResponse);
-        ResponseEntity response = controller.buscarVendedorPorCpf(cpf);
+        ResponseEntity response = controller.searchVendorByCpf(cpf);
         assertAll(
                 () -> assertNotNull(response),
                 () -> assertTrue(response.hasBody()),
@@ -104,10 +107,9 @@ public class VendedorControllerTest {
 
     @Test
     public void findVendorByCpfShouldReturnNotFound() {
-        String cpf = "22483611060";
-        ResponseEntity expectedResponse = VendedorStub.vendedorNotFound();
+        ResponseEntity expectedResponse = VendorStub.vendorNotFound();
         when(service.findAllVendorsByCpf(cpf)).thenReturn(expectedResponse);
-        ResponseEntity response = controller.buscarVendedorPorCpf(cpf);
+        ResponseEntity response = controller.searchVendorByCpf(cpf);
         assertAll(
                 () -> assertNotNull(response),
                 () -> assertTrue(response.hasBody()),
@@ -117,14 +119,13 @@ public class VendedorControllerTest {
     }
 
     @Test
-    public void findVendorByMatriculaShouldReturnFullResponse() {
-        String matricula = "99999";
-        Vendedor vendedor = VendedorStub.create();
-        List<Vendedor> vendedorStub = new ArrayList<>();
-        vendedorStub.add(vendedor);
-        ResponseEntity expectedResponse = new ResponseEntity<>(vendedorStub, HttpStatus.OK);
-        when(service.findAllVendorsByMatricula(matricula)).thenReturn(expectedResponse);
-        ResponseEntity response = controller.buscarVendedorPorMatricula(matricula);
+    public void findVendorByRegistrationShouldReturnFullResponse() {
+        Vendor vendor = VendorStub.create();
+        List<Vendor> vendorStub = new ArrayList<>();
+        vendorStub.add(vendor);
+        ResponseEntity expectedResponse = new ResponseEntity<>(vendorStub, HttpStatus.OK);
+        when(service.findAllVendorsByRegistration(registration)).thenReturn(expectedResponse);
+        ResponseEntity response = controller.searchVendorByRegistration(registration);
         assertAll(
                 () -> assertNotNull(response),
                 () -> assertTrue(response.hasBody()),
@@ -134,11 +135,10 @@ public class VendedorControllerTest {
     }
 
     @Test
-    public void findVendorByMatriculaShouldReturnNotFound() {
-        String matricula = "99999";
-        ResponseEntity expectedResponse = VendedorStub.vendedorNotFound();
-        when(service.findAllVendorsByMatricula(matricula)).thenReturn(expectedResponse);
-        ResponseEntity response = controller.buscarVendedorPorMatricula(matricula);
+    public void findVendorByRegistrationShouldReturnNotFound() {
+        ResponseEntity expectedResponse = VendorStub.vendorNotFound();
+        when(service.findAllVendorsByRegistration(name)).thenReturn(expectedResponse);
+        ResponseEntity response = controller.searchVendorByRegistration(name);
         assertAll(
                 () -> assertNotNull(response),
                 () -> assertTrue(response.hasBody()),
@@ -149,13 +149,12 @@ public class VendedorControllerTest {
 
     @Test
     public void findVendorByEmailShouldReturnFullResponse() {
-        String email = "vendedor@hypeflame.com.br";
-        Vendedor vendedor = VendedorStub.create();
-        List<Vendedor> vendedorStub = new ArrayList<>();
-        vendedorStub.add(vendedor);
-        ResponseEntity expectedResponse = new ResponseEntity<>(vendedorStub, HttpStatus.OK);
+        Vendor vendor = VendorStub.create();
+        List<Vendor> vendorStub = new ArrayList<>();
+        vendorStub.add(vendor);
+        ResponseEntity expectedResponse = new ResponseEntity<>(vendorStub, HttpStatus.OK);
         when(service.findAllVendorsByEmail(email)).thenReturn(expectedResponse);
-        ResponseEntity response = controller.buscarVendedorPorEmail(email);
+        ResponseEntity response = controller.searchVendorByEmail(email);
         assertAll(
                 () -> assertNotNull(response),
                 () -> assertTrue(response.hasBody()),
@@ -166,10 +165,9 @@ public class VendedorControllerTest {
 
     @Test
     public void findVendorByEmailShouldReturnNotFound() {
-        String email = "vendedor@hypeflame.com.br";
-        ResponseEntity expectedResponse = VendedorStub.vendedorNotFound();
+        ResponseEntity expectedResponse = VendorStub.vendorNotFound();
         when(service.findAllVendorsByEmail(email)).thenReturn(expectedResponse);
-        ResponseEntity response = controller.buscarVendedorPorEmail(email);
+        ResponseEntity response = controller.searchVendorByEmail(email);
         assertAll(
                 () -> assertNotNull(response),
                 () -> assertTrue(response.hasBody()),
@@ -179,26 +177,26 @@ public class VendedorControllerTest {
     }
 
     @Test
-    public void createVendorShouldReturnSuccessfullResponse() {
-        Vendedor vendedorStub = VendedorStub.create();
-        Mono<Vendedor> expectedResponse = Mono.just(vendedorStub);
-        when(service.saveVendor(vendedorStub)).thenReturn(expectedResponse);
-        Mono<Vendedor> response = controller.cadastrar(vendedorStub);
+    public void createVendorShouldReturnSuccessfulResponse() {
+        Vendor vendorStub = VendorStub.create();
+        Mono<Vendor> expectedResponse = Mono.just(vendorStub);
+        when(service.saveVendor(vendorStub)).thenReturn(expectedResponse);
+        Mono<Vendor> response = controller.createVendor(vendorStub);
         assertAll(
                 () -> assertNotNull(response),
-                () -> assertEquals(expectedResponse.block().getNome(), response.block().getNome()),
+                () -> assertEquals(expectedResponse.block().getName(), response.block().getName()),
                 () -> assertEquals(expectedResponse.block().getCpf(), response.block().getCpf()),
-                () -> assertEquals(expectedResponse.block().getMatricula(), response.block().getMatricula()),
+                () -> assertEquals(expectedResponse.block().getRegistration(), response.block().getRegistration()),
                 () -> assertEquals(expectedResponse.block().getEmail(), response.block().getEmail())
         );
     }
 
     @Test
-    public void updateVendorShouldReturnSuccessfullResponse() {
-        Vendedor updateVendor = new Vendedor("Pedro Cabral", "11111", "22483611060", "vendedor@agibank.com.br");
+    public void updateVendorShouldReturnSuccessfulResponse() {
+        Vendor updateVendor = new Vendor(name, registration, cpf, email);
         ResponseEntity expectedResponse = new ResponseEntity(HttpStatus.OK);
-        when(service.updateVendor(1L, updateVendor)).thenReturn(expectedResponse);
-        ResponseEntity response = controller.atualizarCadastro(1L, updateVendor);
+        when(service.updateVendor(id, updateVendor)).thenReturn(expectedResponse);
+        ResponseEntity response = controller.updateVendor(id, updateVendor);
         assertAll(
                 () -> assertNotNull(response),
                 () -> assertEquals(expectedResponse.getStatusCode(), response.getStatusCode())
@@ -206,10 +204,10 @@ public class VendedorControllerTest {
     }
 
     @Test
-    public void deleteVendorShouldReturnSuccessfullResponse() {
+    public void deleteVendorShouldReturnSuccessfulResponse() {
         ResponseEntity expectedResponse = new ResponseEntity(HttpStatus.OK);
-        when(service.deleteVendorById(1L)).thenReturn(expectedResponse);
-        ResponseEntity response = controller.deletar(1L);
+        when(service.deleteVendorById(id)).thenReturn(expectedResponse);
+        ResponseEntity response = controller.deleteVendor(id);
         assertAll(
                 () -> assertNotNull(response),
                 () -> assertEquals(expectedResponse.getStatusCode(), response.getStatusCode())
